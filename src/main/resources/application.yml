@@ -6,8 +6,3 @@ spring:
     name: sell-application
   thymeleaf:
     cache: false
-
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-  mapper-locations: classpath:mappers/**/*.xml

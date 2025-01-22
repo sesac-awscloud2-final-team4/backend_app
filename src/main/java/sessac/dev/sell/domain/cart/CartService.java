@@ -1,10 +1,7 @@
 package sessac.dev.sell.domain.cart;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sessac.dev.sell.domain.cart.CartItemDto;
-import sessac.dev.sell.domain.cart.CartMapper;
 
 import java.util.List;
 
@@ -12,26 +9,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService {
 
-    private CartMapper cartMapper;
+    private CartRepository cartRepository;
 
-    public void addToCart(CartItemDto item) {
-        cartMapper.insertCartItem(item);
+    public Long addToCart(CartItemDto item) {
+        return cartRepository.save(Cart.builder()
+                        .memberId(item.getMemberId())
+                        .itemId(item.getItemId())
+                .build()).getId();
     }
 
     public List<CartItemDto> getCartItems(Long memberId) {
-        System.out.println(memberId);
-        return cartMapper.selectCartItemsByMemberId(memberId);
+        return cartRepository.findAllByMemberId(memberId).orElseThrow()
+                .stream().map(CartItemDto::from)
+                .toList();
     }
 
     public void updateCartItemQuantity(Long memberId, Integer itemId, int quantity) {
-        cartMapper.updateCartItemQuantity(memberId, itemId, quantity);
+//        cartMapper.updateCartItemQuantity(memberId, itemId, quantity);
     }
 
-    public void deleteCartItem(Long memberId, Integer itemId) {
-        cartMapper.deleteCartItem(memberId, itemId);
+    public void deleteCartItem(Long memberId, Long itemId) {
+        cartRepository.deleteAllByMemberIdAndItemId(memberId, itemId);
     }
 
     public void clearCart(Long memberId) {
-        cartMapper.clearCart(memberId);
+        cartRepository.deleteAllByMemberId(memberId);
     }
 }

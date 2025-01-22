@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${SPRING_MYSQL_HOST}
+    url: jdbc:mysql://host.docker.internal:3306/sesac?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: ${SPRING_MYSQL_USERNAME}
     password: ${SPRING_MYSQL_PASSWORD}
 

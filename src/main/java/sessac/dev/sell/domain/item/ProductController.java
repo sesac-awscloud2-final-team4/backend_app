@@ -1,6 +1,5 @@
 package sessac.dev.sell.domain.item;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/product/{id}")
-	public String showProductDetail(@PathVariable Integer id, Model model)
-			throws JsonProcessingException {
+	public String showProductDetail(@PathVariable Long id, Model model) {
 		ItemDto item = itemService.findItemById(id);
 		model.addAttribute("item", item);
 
@@ -41,7 +39,7 @@ public class ProductController {
 	}
 
 	@PostMapping("/product/delete.do")
-	public String deleteProduct(@RequestParam final Integer id, Model model) {
+	public String deleteProduct(@RequestParam final Long id, Model model) {
 		itemService.deleteItemById(id);
 		MessageDto message = new MessageDto("상품 삭제가 완료되었습니다.", "/product.do",
 				RequestMethod.GET, null);

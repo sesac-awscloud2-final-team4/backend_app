@@ -77,10 +77,6 @@ public class MemberController {
 			session.setAttribute("userGender", member.getGender());
 //			session.setAttribute("userAge",
 //					Period.between(LocalDate.now(), member.getBirthday()).getYears());
-			System.out.println(session.getAttribute("userId"));
-			System.out.println(session.getAttribute("userName"));
-			System.out.println(session.getAttribute("userAge"));
-			System.out.println(session.getAttribute("userGender"));
 			session.setMaxInactiveInterval(60 * 30);
 		}
 

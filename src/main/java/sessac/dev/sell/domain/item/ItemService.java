@@ -8,14 +8,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-    private final ItemMapper itemMapper;
+    private final ItemRepository itemRepository;
 
     /**
      * 물건 저장
      * @param itemDto - 저장할 물건 정보
      */
-    public void saveItem(ItemDto itemDto) {
-        itemMapper.save(itemDto);
+    public Long saveItem(ItemDto itemDto) {
+        return itemRepository.save(Item.builder()
+                        .itemName(itemDto.getItemName())
+                        .price(itemDto.getPrice())
+                        .stockNumber(itemDto.getStockNumber())
+                        .itemDetail(itemDto.getItemDetail())
+                .build()).getId();
     }
 
     /**
@@ -23,8 +28,8 @@ public class ItemService {
      * @param id - 물건 ID
      * @return 물건 상세정보
      */
-    public ItemDto findItemById(Integer id) {
-        return itemMapper.findById(id);
+    public ItemDto findItemById(Long id) {
+        return ItemDto.from(itemRepository.findById(id).orElseThrow());
     }
 
     /**
@@ -33,8 +38,9 @@ public class ItemService {
      * @return 물건 리스트
      */
     public List<ItemDto> findAllItem(){
-
-        return itemMapper.findAllItem();
+        return itemRepository.findAll().stream()
+                .map(ItemDto::from)
+                .toList();
     }
 
 //    public Page<Map<String,Object>> findAllItem(Map<String,Object> paramMap, Pageable page){
@@ -48,7 +54,7 @@ public class ItemService {
      * 물건 삭제
      * @param id - 삭제할 물건 ID
      */
-    public void deleteItemById(Integer id) {
-        itemMapper.deleteById(id);
+    public void deleteItemById(Long id) {
+        itemRepository.deleteById(id);
     }
 }

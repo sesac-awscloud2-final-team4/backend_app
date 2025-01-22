@@ -17,17 +17,13 @@ public class CartController {
 	private CartService cartService;
 
 	@PostMapping("/add/{itemId}")
-	public String addToCart(@PathVariable Integer itemId, HttpServletRequest request) {
+	public String addToCart(@PathVariable Long itemId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Long userId = (Long) session.getAttribute("id");
-
-		System.out.println(userId);
-		System.out.println(itemId);
 
 		CartItemDto cartItem = new CartItemDto();
 		cartItem.setMemberId(userId);
 		cartItem.setItemId(itemId);
-		System.out.println(cartItem.getItemId());
 
 		cartService.addToCart(cartItem); // 장바구니에 추가
 
@@ -38,10 +34,7 @@ public class CartController {
 	public void viewCart(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		Long memberId = (Long) session.getAttribute("id");
-		System.out.println(memberId);
 		List<CartItemDto> cartItems = cartService.getCartItems(memberId);
-		//        model.addAttribute("cartItems", cartItems);
-		//        return "/cart/cart"; // 장바구니 화면
 	}
 
 	@PostMapping("/update")
@@ -53,7 +46,7 @@ public class CartController {
 
 	@PostMapping("/delete")
 	public String deleteCartItem(@RequestParam Long memberId,
-			@RequestParam Integer itemId) {
+			@RequestParam Long itemId) {
 		cartService.deleteCartItem(memberId, itemId);
 		return "redirect:/cart?memberId=" + memberId; // 장바구니 페이지로 리다이렉트
 	}
