@@ -52,7 +52,7 @@ public class ProductController {
 	public String openProductListFromRott(Model model, HttpSession session) {
 		// 상품 리스트를 모델에 추가
 		if (session.getAttribute("userId") == null) {
-			return "redirect:/login.do";
+			return "redirect:/login";
 		}
 		model.addAttribute("items", itemService.findAllItem());
 		return "item/product"; // templates/product.html을 반환

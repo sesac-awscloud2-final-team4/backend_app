@@ -6,9 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 @Controller
 @RequiredArgsConstructor
 @CrossOrigin("*")
@@ -17,7 +14,7 @@ public class MemberController {
 	private final MemberService memberService;
 
 	// 로그인 페이지
-	@GetMapping("/login.do")
+	@GetMapping("/login")
 	public String openLogin() {
 		return "member/login";
 	}
@@ -54,7 +51,7 @@ public class MemberController {
 	// 회원 수 카운팅 (ID 중복 체크)
 	@GetMapping("/member-count")
 	@ResponseBody
-	public int countMemberByLoginId(@RequestParam final String loginId) {
+	public int countMemberByLoginId(@RequestParam("loginId") final String loginId) {
 		return memberService.countMemberByLoginId(loginId);
 	}
 
@@ -78,8 +75,8 @@ public class MemberController {
 			session.setAttribute("userId", member.getLoginId());
 			session.setAttribute("userName", member.getName());
 			session.setAttribute("userGender", member.getGender());
-			session.setAttribute("userAge",
-					Period.between(LocalDate.now(), member.getBirthday()).getYears());
+//			session.setAttribute("userAge",
+//					Period.between(LocalDate.now(), member.getBirthday()).getYears());
 			System.out.println(session.getAttribute("userId"));
 			System.out.println(session.getAttribute("userName"));
 			System.out.println(session.getAttribute("userAge"));
@@ -94,7 +91,7 @@ public class MemberController {
 	@PostMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/login.do";
+		return "redirect:/login";
 	}
 
 }

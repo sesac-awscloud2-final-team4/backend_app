@@ -2,11 +2,11 @@ package sessac.dev.sell.domain.member;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
-public class MemberResponse {
+public class MemberResponse implements Serializable {
 
     private Long id;                       // 회원 번호 (PK)
     private String loginId;                // 로그인 ID
@@ -15,8 +15,17 @@ public class MemberResponse {
     private Gender gender;                 // 성별
     private LocalDate birthday;            // 생년월일
     private Boolean deleteYn;              // 삭제 여부
-    private LocalDateTime createdDate;     // 생성일시
-    private LocalDateTime modifiedDate;    // 최종 수정일시
+
+    public static MemberResponse from(Member member) {
+        MemberResponse memberResponse = new MemberResponse();
+        memberResponse.loginId = member.getLoginId();
+        memberResponse.password = member.getPassword();
+        memberResponse.name = member.getName();
+        memberResponse.gender = member.getGender();
+        memberResponse.birthday = member.getBirthday();
+        memberResponse.deleteYn = member.getDeleteYn();
+        return memberResponse;
+    }
 
     public void clearPassword() {
         this.password = "";

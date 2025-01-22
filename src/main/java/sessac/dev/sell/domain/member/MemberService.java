@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-	private final MemberMapper memberMapper;
+	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	/**
@@ -20,8 +20,14 @@ public class MemberService {
 	@Transactional
 	public Long saveMember(final MemberRequest params) {
 		params.encodingPassword(passwordEncoder);
-		memberMapper.save(params);
-		return params.getId();
+		Member member = memberRepository.save(Member.builder()
+						.name(params.getName())
+						.loginId(params.getLoginId())
+						.password(params.getPassword())
+						.gender(params.getGender())
+//						.birthday(params.getBirthday())
+				.build());
+		return member.getId();
 	}
 
 	/**
@@ -30,7 +36,7 @@ public class MemberService {
 	 * @return 회원 상세정보
 	 */
 	public MemberResponse findMemberByLoginId(final String loginId) {
-		return memberMapper.findByLoginId(loginId);
+		return MemberResponse.from(memberRepository.findByLoginId(loginId).orElseThrow());
 	}
 
 	/**
@@ -41,7 +47,9 @@ public class MemberService {
 	@Transactional
 	public Long updateMember(final MemberRequest params) {
 		params.encodingPassword(passwordEncoder);
-		memberMapper.update(params);
+		Member member = memberRepository.findById(params.getId()).orElseThrow();
+		// TODO
+//		memberMapper.update(params);
 		return params.getId();
 	}
 
@@ -52,7 +60,8 @@ public class MemberService {
 	 */
 	@Transactional
 	public Long deleteMemberById(final Long id) {
-		memberMapper.deleteById(id);
+		// TODO
+//		memberMapper.deleteById(id);
 		return id;
 	}
 
@@ -62,7 +71,9 @@ public class MemberService {
 	 * @return 회원 수
 	 */
 	public int countMemberByLoginId(final String loginId) {
-		return memberMapper.countByLoginId(loginId);
+//		return memberMapper.countByLoginId(loginId);
+		// TODO
+		return 0;
 	}
 
 	/**

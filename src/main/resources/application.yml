@@ -3,11 +3,7 @@ server:
 
 spring:
   application:
-    name: sesac.dev.sell
-  datasource:
-    url: jdbc:mysql://localhost:3306/schoolmatedb?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    name: sell-application
   thymeleaf:
     cache: false
 

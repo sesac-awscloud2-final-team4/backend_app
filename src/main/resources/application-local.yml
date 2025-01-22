@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb  # 메모리 내 데이터베이스 URL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      poolName: H2Pool
+      maximumPoolSize: 10
+
+  session:
+    redis:
+      repository-type: indexed
+      flush-mode: on_save
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true  # H2 콘솔을 활성화하여 브라우저에서 DB를 확인할 수 있도록 함
+      path: /h2-console  # H2 콘솔 접속 경로 (브라우저에서 /h2-console로 접속)
