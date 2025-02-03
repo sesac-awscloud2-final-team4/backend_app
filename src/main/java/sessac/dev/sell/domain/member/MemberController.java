@@ -20,7 +20,7 @@ public class MemberController {
 	}
 
 	// 회원 정보 저장 (회원가입)
-	@PostMapping("/members")
+	@PostMapping("/member")
 	@ResponseBody
 	public Long saveMember(@RequestBody final MemberRequest params) {
 		return memberService.saveMember(params);

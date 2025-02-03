@@ -140,7 +140,7 @@
             },
             async : false,
             success : function (response) {
-                location.href = '/products.do';
+                location.href = '/product';
             },
             error : function (request, status, error) {
                 alert('아이디와 비밀번호를 확인해 주세요.');
@@ -274,7 +274,7 @@
         params.birthday = params.birthday.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
 
         // 3. Save API 호출
-        callApi('/members', 'post', params);
+        callApi('/member', 'post', params);
         alert('가입을 축하드립니다!\n로그인 후 서비스를 이용해 주세요.');
         closeSignupPopup();
     }

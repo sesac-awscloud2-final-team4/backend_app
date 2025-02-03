@@ -18,6 +18,7 @@ public class MemberResponse implements Serializable {
 
     public static MemberResponse from(Member member) {
         MemberResponse memberResponse = new MemberResponse();
+        memberResponse.id = member.getId();
         memberResponse.loginId = member.getLoginId();
         memberResponse.password = member.getPassword();
         memberResponse.name = member.getName();

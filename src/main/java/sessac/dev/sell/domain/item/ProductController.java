@@ -15,33 +15,31 @@ import sessac.dev.sell.common.MessageDto;
 public class ProductController {
 	private final ItemService itemService;
 
-	@GetMapping("/products.do")
+	@GetMapping("/product")
 	public String showProducts(Model model) {
-		// 상품 리스트를 모델에 추가
 		model.addAttribute("items", itemService.findAllItem());
-		return "item/product"; // templates/product.html을 반환
+		return "item/product";
 	}
 
 	@GetMapping("/product/{id}")
-	public String showProductDetail(@PathVariable Long id, Model model) {
+	public String showProductDetail(@PathVariable(name = "id") Long id, Model model) {
 		ItemDto item = itemService.findItemById(id);
 		model.addAttribute("item", item);
-
-		return "item/product-detail"; // templates/item/product-detail.html을 반환
+		return "item/product-detail";
 	}
 
 	@PostMapping("/product/add")
 	public String addProduct(final ItemDto params, Model model) {
 		itemService.saveItem(params);
-		MessageDto message = new MessageDto("상품 업로드 완료되었습니다. ", "/product.do",
+		MessageDto message = new MessageDto("상품 업로드 완료되었습니다. ", "/product",
 				RequestMethod.GET, null);
 		return showMessageAndRedirect(message, model);
 	}
 
-	@PostMapping("/product/delete.do")
+	@PostMapping("/product/delete")
 	public String deleteProduct(@RequestParam final Long id, Model model) {
 		itemService.deleteItemById(id);
-		MessageDto message = new MessageDto("상품 삭제가 완료되었습니다.", "/product.do",
+		MessageDto message = new MessageDto("상품 삭제가 완료되었습니다.", "/product",
 				RequestMethod.GET, null);
 		return showMessageAndRedirect(message, model);
 	}

@@ -11,15 +11,20 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cart {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "memberId")
+	@Column(name = "memberId", nullable = false)
 	private Long memberId;
 
-	@Column(name = "itemId")
+	@Column(name = "itemId", nullable = false)
 	private Long itemId;
 
-	@Column(name = "quantity")
-	private Long quantity;
+	@Column(name = "quantity", nullable = false)
+	private Integer quantity;
+
+	public void updateQuantity(int quantity) {
+		if(quantity < 1) return;
+		this.quantity = quantity;
+	}
 }

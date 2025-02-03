@@ -1,12 +1,9 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb  # 메모리 내 데이터베이스 URL
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-    hikari:
-      poolName: H2Pool
-      maximumPoolSize: 10
+    url: ${SPRING_MYSQL_HOST}
+    username: ${SPRING_MYSQL_USERNAME}
+    password: ${SPRING_MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   session:
     redis:
@@ -18,7 +15,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
 
   h2:
     console:

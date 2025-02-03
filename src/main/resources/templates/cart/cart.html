@@ -1,44 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>장바구니</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>장바구니</h1>
-<table>
-    <thead>
-    <tr>
-        <th>상품 이름</th>
-        <th>가격</th>
-        <th>수량</th>
-        <th>작업</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${cartItems}">
-        <td th:text="${item.itemName}"></td>
-        <td th:text="${item.price}"></td>
-        <td>
-            <form th:action="@{/cart/update}" method="post">
-                <input type="hidden" name="memberId" th:value="${item.memberId}" /> <!-- memberId 포함 -->
-                <input type="hidden" name="itemId" th:value="${item.itemId}" />
-                <input type="number" name="quantity" th:value="${item.quantity}" min="1" />
-                <button type="submit">수정</button>
-            </form>
-        </td>
-        <td>
-            <form th:action="@{/cart/delete}" method="post">
-                <input type="hidden" name="memberId" th:value="${item.memberId}" /> <!-- memberId 포함 -->
-                <input type="hidden" name="itemId" th:value="${item.itemId}" />
-                <button type="submit">삭제</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<form th:action="@{/cart/clear}" method="post">
-    <input type="hidden" name="memberId" th:value="${cartItems[0].memberId}" /> <!-- memberId 포함 -->
-    <button type="submit">장바구니 비우기</button>
-</form>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">장바구니</h1>
+    <!-- 장바구니 비었을 때 표시될 메시지 -->
+    <p id="empty-cart-message" class="text-center text-muted" style="display: none;">
+        장바구니가 비었습니다.
+    </p>
+
+    <div class="row">
+        <div class="col-9">
+            <div class="cart-item card mb-4" th:each="item : ${cartItems}" th:id="|cart-item-${item.itemId}|" th:data-price="${item.price}">
+                <div class="row card-body">
+                    <div class="col-3">
+                        <img src="img/product-img/product2.jpg" class="card-img" alt="상품 이미지"> <!-- 상품 이미지 URL -->
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <h5 class="col card-title">
+                                <a th:href="@{/product/{id}(id=${item.itemId})}" th:text="${item.itemName}">상품이름</a>
+                            </h5>
+                            <div class="col text-right">
+                                <button th:onclick="|deleteCartItem(${item.itemId})|" class="btn btn-danger" type="submit">삭제</button>
+                            </div>
+                        </div>
+
+                        <p class="card-text"><strong th:text="'가격: ' + ${item.price} + '원'">1000원</strong></p>
+                        <div class="row">
+                            <div class="col col-lg-4 card">
+                                <div class="row card-body">
+                                    <button class="col btn btn-primary" type="button" th:onclick="|updateCartItem(${item.itemId}, 1)|">+</button>
+                                    <p class="col text-center item-quantity" th:text="${item.quantity}">1</p>
+                                    <button class="col btn btn-primary" type="button" th:onclick="|updateCartItem(${item.itemId}, -1)|">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col card mb-4" id="order-summary">
+                <div class="card-body">
+                    <h4 class="card-title">주문 예상 금액</h4>
+                    <p class="card-text">총 상품 가격</p>
+                    <p id="total-price" class="card-text">1000원</p>
+
+                    <form th:action="@{/cart/buy}" method="post">
+                        <button class="col mt-4 align-self-end btn btn-primary" type="submit">구매하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button th:onclick="clearCart()" class="btn btn-info" type="submit">장바구니 비우기</button>
+</div>
+
+<div style="margin-top: 50px"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="/js/cart.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

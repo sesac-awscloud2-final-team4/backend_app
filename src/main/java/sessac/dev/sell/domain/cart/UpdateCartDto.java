@@ -1,13 +1,9 @@
 package sessac.dev.sell.domain.cart;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class CartItemDto {
+public class UpdateCartDto {
 	private Long itemId;
-	private String itemName;
-	private Integer price;
 	private Integer quantity;
 }

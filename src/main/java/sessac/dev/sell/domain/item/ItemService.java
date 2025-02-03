@@ -43,12 +43,16 @@ public class ItemService {
                 .toList();
     }
 
-//    public Page<Map<String,Object>> findAllItem(Map<String,Object> paramMap, Pageable page){
-//        paramMap.put("offset", page.getNumberOfPages());
-//        paramMap.put("pageSize", page.)
-//    }
-
-
+    /**
+     * 해당 물건 리스트 조회
+     *
+     * @return 물건 리스트
+     */
+    public List<ItemDto> findAllById(List<Long> itemIds){
+        return itemRepository.findAllById(itemIds).stream()
+                .map(ItemDto::from)
+                .toList();
+    }
 
     /**
      * 물건 삭제
