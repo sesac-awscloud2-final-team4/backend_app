@@ -2,8 +2,8 @@ package sessac.dev.sell.domain.cart;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sessac.dev.sell.domain.item.ItemDto;
-import sessac.dev.sell.domain.item.ItemService;
+import sessac.dev.sell.domain.product.ItemDto;
+import sessac.dev.sell.domain.product.ProductService;
 
 import java.util.List;
 import java.util.Map;
@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CartItemService {
 	private final CartService cartService;
-	private final ItemService itemService;
+	private final ProductService productService;
 
 	public List<CartItemDto> getCartItems(Long memberId) {
 		List<CartDto> cartList = cartService.getCartItems(memberId);
-		List<ItemDto> itemList = itemService.findAllById(cartList.stream()
+		List<ItemDto> itemList = productService.findAllById(cartList.stream()
 				.map(CartDto::getItemId)
 				.toList());
 		Map<Long, ItemDto> itemMap = itemList.stream()

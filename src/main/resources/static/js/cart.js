@@ -85,3 +85,36 @@ function clearCart() {
         })
         .catch(error => console.error("장바구니 비우기 오류:", error));
 }
+
+// 장바구니 구매하기 함수
+function buyCart() {
+    const cartItems = [];
+    document.querySelectorAll(".cart-item").forEach(item => {
+        const itemId = item.id.split('-').at(2);
+        const itemName = item.querySelector(".item-name").innerText;
+        const price = item.dataset.price
+        const quantity = item.querySelector(".item-quantity").innerText;
+
+        cartItems.push({
+            itemId: itemId,
+            price: parseInt(price),
+            quantity: parseInt(quantity),
+            itemName: itemName
+        });
+    });
+
+    if(cartItems.length < 1) return;
+    console.log(cartItems);
+
+    // 서버에 구매하기 요청
+    fetch("/purchase/buy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cartItems),
+        redirect: 'follow'
+    })
+        .then(() =>
+            window.location.href = '/purchase'
+        )
+        .catch(error => console.error("구매하기 오류:", error));
+}

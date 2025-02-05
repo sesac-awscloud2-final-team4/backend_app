@@ -26,7 +26,7 @@
                     <div class="col">
                         <div class="row">
                             <h5 class="col card-title">
-                                <a th:href="@{/product/{id}(id=${item.itemId})}" th:text="${item.itemName}">상품이름</a>
+                                <a class="item-name" th:href="@{/product/{id}(id=${item.itemId})}" th:text="${item.itemName}">상품이름</a>
                             </h5>
                             <div class="col text-right">
                                 <button th:onclick="|deleteCartItem(${item.itemId})|" class="btn btn-danger" type="submit">삭제</button>
@@ -48,15 +48,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="col card mb-4" id="order-summary">
+            <div class="col card mb-4" id="purchase-summary">
                 <div class="card-body">
                     <h4 class="card-title">주문 예상 금액</h4>
                     <p class="card-text">총 상품 가격</p>
                     <p id="total-price" class="card-text">1000원</p>
 
-                    <form th:action="@{/cart/buy}" method="post">
-                        <button class="col mt-4 align-self-end btn btn-primary" type="submit">구매하기</button>
-                    </form>
+                    <button th:onclick="buyCart()" class="col mt-4 align-self-end btn btn-primary" type="submit">구매하기</button>
                 </div>
             </div>
         </div>

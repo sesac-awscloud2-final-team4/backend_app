@@ -5,19 +5,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-
     private final CartRepository cartRepository;
 
-    public Long addToCart(CartDto item) {
-        return cartRepository.save(Cart.builder()
-                        .memberId(item.getMemberId())
-                        .itemId(item.getItemId())
-                        .quantity(item.getQuantity())
-                .build()).getId();
+    public Long addToCart(CartDto cartDto) {
+        Optional<Cart> cart = cartRepository.findCartByMemberIdAndItemId(cartDto.getMemberId(), cartDto.getItemId());
+
+        if (cart.isPresent()) {
+            Cart existingCart = cart.get();
+            existingCart.updateQuantity(existingCart.getQuantity() + cartDto.getQuantity());
+            return cartRepository.save(existingCart).getId();
+        }
+
+        // 존재하지 않으면 새로 저장
+        Cart newCart = Cart.builder()
+                .memberId(cartDto.getMemberId())
+                .itemId(cartDto.getItemId())
+                .quantity(cartDto.getQuantity())
+                .build();
+
+        return cartRepository.save(newCart).getId();
+
     }
 
     public List<CartDto> getCartItems(Long memberId) {

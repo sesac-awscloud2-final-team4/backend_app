@@ -1,4 +1,4 @@
-package sessac.dev.sell.domain.item;
+package sessac.dev.sell.domain.product;
 
 import lombok.Getter;
 import lombok.Setter;

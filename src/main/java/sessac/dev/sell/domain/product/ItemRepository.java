@@ -1,4 +1,4 @@
-package sessac.dev.sell.domain.item;
+package sessac.dev.sell.domain.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

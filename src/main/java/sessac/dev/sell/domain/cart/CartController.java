@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cart")
 @RequiredArgsConstructor
 public class CartController {
-
 	private final CartService cartService;
 	private final CartItemService cartItemService;
 
@@ -19,24 +18,23 @@ public class CartController {
 	public String viewCart(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		Long memberId = (Long) session.getAttribute("id");
-		// TODO move to service layer
 		model.addAttribute("cartItems", cartItemService.getCartItems(memberId));
 		model.addAttribute("memberId", memberId);
 		return "cart/cart";
 	}
 
-	@PostMapping("/add/{itemId}")
-	public String addToCart(@PathVariable(name = "itemId") Long itemId, HttpServletRequest request) {
+	@PostMapping("/add/{productId}")
+	public String addToCart(@PathVariable(name = "productId") Long productId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Long userId = (Long) session.getAttribute("id");
 
 		CartDto cartItem = new CartDto();
 		cartItem.setMemberId(userId);
-		cartItem.setItemId(itemId);
+		cartItem.setItemId(productId);
 		cartItem.setQuantity(1);
 
-		cartService.addToCart(cartItem); // 장바구니에 추가
-		return "redirect:/cart"; // 장바구니 페이지로 리다이렉트
+		cartService.addToCart(cartItem);
+		return "redirect:/cart";
 	}
 
 	@ResponseBody

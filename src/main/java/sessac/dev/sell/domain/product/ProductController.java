@@ -1,4 +1,4 @@
-package sessac.dev.sell.domain.item;
+package sessac.dev.sell.domain.product;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -13,24 +13,24 @@ import sessac.dev.sell.common.MessageDto;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class ProductController {
-	private final ItemService itemService;
+	private final ProductService productService;
 
 	@GetMapping("/product")
 	public String showProducts(Model model) {
-		model.addAttribute("items", itemService.findAllItem());
+		model.addAttribute("items", productService.findAllItem());
 		return "item/product";
 	}
 
 	@GetMapping("/product/{id}")
 	public String showProductDetail(@PathVariable(name = "id") Long id, Model model) {
-		ItemDto item = itemService.findItemById(id);
+		ItemDto item = productService.findItemById(id);
 		model.addAttribute("item", item);
 		return "item/product-detail";
 	}
 
 	@PostMapping("/product/add")
 	public String addProduct(final ItemDto params, Model model) {
-		itemService.saveItem(params);
+		productService.saveItem(params);
 		MessageDto message = new MessageDto("상품 업로드 완료되었습니다. ", "/product",
 				RequestMethod.GET, null);
 		return showMessageAndRedirect(message, model);
@@ -38,7 +38,7 @@ public class ProductController {
 
 	@PostMapping("/product/delete")
 	public String deleteProduct(@RequestParam final Long id, Model model) {
-		itemService.deleteItemById(id);
+		productService.deleteItemById(id);
 		MessageDto message = new MessageDto("상품 삭제가 완료되었습니다.", "/product",
 				RequestMethod.GET, null);
 		return showMessageAndRedirect(message, model);
@@ -50,7 +50,7 @@ public class ProductController {
 		if (session.getAttribute("userId") == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("items", itemService.findAllItem());
+		model.addAttribute("items", productService.findAllItem());
 		return "item/product"; // templates/product.html을 반환
 	}
 

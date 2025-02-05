@@ -1,18 +1,24 @@
-package sessac.dev.sell.domain.item;
+package sessac.dev.sell.domain.purchase;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "Item")
+@Table(name = "Purchase")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item {
+public class Purchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "memberId", nullable = false)
+	private Long memberId;
+
+	@Column(name = "itemId", nullable = false)
+	private Long itemId;
 
 	@Column(name = "itemName", nullable = false)
 	private String itemName;
@@ -20,9 +26,6 @@ public class Item {
 	@Column(name = "price", nullable = false)
 	private Integer price;
 
-	@Column(name = "stockNumber")
-	private Integer stockNumber;
-
-	@Column(name = "itemDetail")
-	private String itemDetail;
+	@Column(name = "quantity", nullable = false)
+	private Integer quantity;
 }
