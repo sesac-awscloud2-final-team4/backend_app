@@ -50,6 +50,10 @@ dependencies {
     implementation 'ch.qos.logback:logback-core:1.5.13'
     implementation 'ch.qos.logback:logback-classic:1.5.13'
     implementation 'org.slf4j:slf4j-api:2.0.16'
+
+    // kinesis
+    implementation 'software.amazon.awssdk:auth:2.20.0'
+    implementation 'software.amazon.awssdk:kinesis:2.20.0'
 }
 dependencyManagement {
     imports {

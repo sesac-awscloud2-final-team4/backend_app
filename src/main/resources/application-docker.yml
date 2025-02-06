@@ -21,3 +21,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+cloud:
+  aws:
+    kinesis:
+      stream-name: project_stream
+      partition-key: key1

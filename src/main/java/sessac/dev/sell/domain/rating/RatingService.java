@@ -9,14 +9,14 @@ public class RatingService {
 	private final RatingRepository ratingRepository;
 
 	public void saveRating(Long memberId, RatingDto ratingDto) {
-		if(ratingRepository.existsRatingByMemberIdAndOrderIdAndItemId(memberId, ratingDto.getOrderId(), ratingDto.getItemId())) {
+		if(ratingRepository.existsRatingByMemberIdAndOrderIdAndProductId(memberId, ratingDto.getOrderId(), ratingDto.getProductId())) {
 			return;
 		}
 
 		ratingRepository.save(Rating.builder()
 						.memberId(memberId)
 						.orderId(ratingDto.getOrderId())
-						.itemId(ratingDto.getItemId())
+						.productId(ratingDto.getProductId())
 						.rating(ratingDto.getRating())
 				.build());
 	}

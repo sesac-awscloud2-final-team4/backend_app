@@ -16,7 +16,7 @@
             <div class="card mb-4">
                 <!-- 나중에 s3같은 거 쓰면 사용할 것-->
 <!--                <img th:src="@{${item.imageUrl}}" class="card-img-top" alt="상품 이미지"> &lt;!&ndash; 상품 이미지 URL &ndash;&gt;-->
-                <img src="img/product-img/product2.jpg" class="card-img-top" alt="상품 이미지"> <!-- 상품 이미지 URL -->
+                <img src="/img/product-img/product2.jpg" class="card-img-top" alt="상품 이미지"> <!-- 상품 이미지 URL -->
 
                 <div class="card-body">
                     <h5 class="card-title">
@@ -24,7 +24,10 @@
                     </h5>
                     <p class="card-text" th:text="${item.itemDetail}">상품 설명이 들어갑니다.</p>
                     <p class="card-text"><strong th:text="'가격: ' + ${item.price} + '원'"></strong></p>
-                    <a href="#" class="btn btn-primary">장바구니</a>
+
+                    <form th:action="|@{/cart/add/{itemId}(itemId=${item.id})}?page=main|" method="post">
+                        <button type="submit" class="btn btn-primary">장바구니</button>
+                    </form>
                 </div>
             </div>
         </div>

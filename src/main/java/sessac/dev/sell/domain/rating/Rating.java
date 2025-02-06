@@ -17,8 +17,8 @@ public class Rating {
 	private Long memberId;
 	@Column(name = "orderId", nullable = false)
 	private Long orderId;
-	@Column(name = "itemId", nullable = false)
-	private Long itemId;
+	@Column(name = "productId", nullable = false)
+	private Long productId;
 	@Column(name = "rating", nullable = false)
 	private float rating;
 }

@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", function() {
             let rateDiv = this.closest('.rate');  // 부모 div 찾기
             let rateId = rateDiv.id.split('-');   // id에서 orderId, itemId 추출
             let orderId = rateId[0];              // 주문 ID
-            let itemId = rateId[1];               // 상품 ID
+            let productId = rateId[1];               // 상품 ID
             let rating = this.value;              // 선택한 별점 값
 
             // 서버로 전송할 데이터 구성
             let data = {
                 orderId: orderId,
-                itemId: itemId,
+                productId: productId,
                 rating: rating
             };
 

@@ -104,7 +104,6 @@ function buyCart() {
     });
 
     if(cartItems.length < 1) return;
-    console.log(cartItems);
 
     // 서버에 구매하기 요청
     fetch("/purchase/buy", {

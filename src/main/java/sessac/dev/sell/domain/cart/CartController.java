@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sessac.dev.sell.common.EventLogProducer;
 
 @Controller
 @RequestMapping("/cart")
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 	private final CartService cartService;
 	private final CartItemService cartItemService;
+	private final EventLogProducer producer;
 
 	@GetMapping("")
 	public String viewCart(HttpServletRequest request, Model model) {
@@ -24,7 +26,7 @@ public class CartController {
 	}
 
 	@PostMapping("/add/{productId}")
-	public String addToCart(@PathVariable(name = "productId") Long productId, HttpServletRequest request) {
+	public String addToCart(HttpServletRequest request, @PathVariable(name = "productId") Long productId, @RequestParam(value = "page", required = false) String page) {
 		HttpSession session = request.getSession();
 		Long userId = (Long) session.getAttribute("id");
 
@@ -34,6 +36,7 @@ public class CartController {
 		cartItem.setQuantity(1);
 
 		cartService.addToCart(cartItem);
+		producer.cartEvent(productId, page);
 		return "redirect:/cart";
 	}
 

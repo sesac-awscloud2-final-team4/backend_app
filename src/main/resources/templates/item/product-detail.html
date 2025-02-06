@@ -21,15 +21,34 @@
             <p th:text="${item.itemDetail}"></p>
             <p th:text="'재고: ' + ${item.stockNumber}"></p>
             <a href="/product" class="btn btn-secondary mb-3">목록으로 돌아가기</a>
-            <form th:action="@{/cart/add/{itemId}(itemId=${item.id})}" method="post">
+            <form th:action="|@{/cart/add/{itemId}(itemId=${item.id})}?page=prod_detail|" method="post">
                 <button type="submit" class="btn btn-secondary">장바구니에 담기</button>
             </form>
+        </div>
+
+        <h4 class="mt-4">추천 상품</h4>
+
+        <div class="row mt-2">
+            <div class="col-2" th:each="item : ${items}">
+                <div class="card mb-4" th:id="${item.id}">
+                    <img src="/img/product-img/product2.jpg" class="card-img-top" alt="상품 이미지">
+
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="#" th:onclick="|showProduct(${item.id})|" th:text="${item.itemName}"></a>
+                        </h5>
+                        <p class="card-text" th:text="${item.itemDetail}">상품 설명이 들어갑니다.</p>
+                        <p class="card-text"><strong th:text="'가격: ' + ${item.price} + '원'"></strong></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div style="margin-top: 50px"></div>
 <div th:replace="~{fragments/footer :: footer}"></div>
+<script src="/js/product-detail.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

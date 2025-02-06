@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class RatingDto {
 	private Long orderId;
-	private Long itemId;
+	private Long productId;
 	private Integer rating;
 }

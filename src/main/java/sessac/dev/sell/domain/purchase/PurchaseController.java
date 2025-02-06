@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sessac.dev.sell.common.EventLogProducer;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PurchaseController {
 	private final PurchaseService purchaseService;
+	private final EventLogProducer producer;
 
 	@GetMapping("")
 	public String showPurchases(HttpServletRequest request, Model model) {
@@ -29,6 +31,7 @@ public class PurchaseController {
 		HttpSession session = request.getSession();
 		Long memberId = (Long) session.getAttribute("id");
 		purchaseService.buyCartItems(memberId, purchaseDto);
+		producer.purchaseEvent("cart", purchaseDto);
 		return "success";
 	}
 }

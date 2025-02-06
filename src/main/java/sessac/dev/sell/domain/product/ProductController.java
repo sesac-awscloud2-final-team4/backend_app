@@ -6,14 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sessac.dev.sell.common.EventLogProducer;
 import sessac.dev.sell.common.MessageDto;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class ProductController {
 	private final ProductService productService;
+	private final EventLogProducer producer;
 
 	@GetMapping("/product")
 	public String showProducts(Model model) {
@@ -22,9 +24,11 @@ public class ProductController {
 	}
 
 	@GetMapping("/product/{id}")
-	public String showProductDetail(@PathVariable(name = "id") Long id, Model model) {
-		ItemDto item = productService.findItemById(id);
+	public String showProductDetail(@PathVariable(name = "id") Long productId, @RequestParam(value = "rec", required = false) String recommended, Model model) {
+		ItemDto item = productService.findItemById(productId);
 		model.addAttribute("item", item);
+		model.addAttribute("items", productService.findAllItem());
+		producer.productEvent(productId, "main", recommended);
 		return "item/product-detail";
 	}
 
