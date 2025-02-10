@@ -1,0 +1,50 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - export AWS_ACCOUNT_ID=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .AWS_ACCOUNT_ID)
+      - export AWS_REGION=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .AWS_REGION)
+      - export ECR_REPOSITORY_NAME=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .ECR_REPOSITORY_NAME)
+      - export TASK_FAMILY="sesac-cicid-2nd-taskfamily"
+      - export SECRET_ARN="arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:hhchTestAWSkeys-njeoX6"
+      
+      # SPRING_ 환경 변수들을 모두 AWS Secrets Manager에서 가져와 설정
+      - export SPRING_MYSQL_HOST=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_MYSQL_HOST)
+      - export SPRING_MYSQL_USERNAME=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_MYSQL_USERNAME)
+      - export SPRING_MYSQL_PASSWORD=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_MYSQL_PASSWORD)
+      - export SPRING_DATASOURCE_URL=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_DATASOURCE_URL)
+      - export SPRING_REDIS_HOST=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_REDIS_HOST)
+      - export SPRING_REDIS_PORT=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_REDIS_PORT)
+      - export SPRING_REDIS_PASSWORD=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_REDIS_PASSWORD)
+      - export SPRING_PROFILES_ACTIVE=$(aws secretsmanager get-secret-value --secret-id hhchTestAWSkeys --query SecretString --output text | jq -r .SPRING_PROFILES_ACTIVE)
+
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+      - chmod +x ./gradlew  # Gradle Wrapper 실행 권한 추가
+
+  pre_build:
+    commands:
+      - echo "Starting the build process..."
+      - echo "Setting up image definitions..."
+      - IMAGE_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"
+
+  build:
+    commands:
+      - echo "Building the project with Gradle..."
+      - ./gradlew build  # Gradle 빌드 실행
+      - echo "Building the Docker image..."
+      - docker build -t ${ECR_REPOSITORY_NAME}:latest .
+
+  post_build:
+    commands:
+      - echo "Pushing the Docker image to ECR..."
+      - docker tag ${ECR_REPOSITORY_NAME}:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest
+      - echo "Build complete."
+      - printf '[{"name":"test_container","imageUri":"%s"}]' ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest > imagedefinitions.json 
+
+artifacts:
+  files:
+    - build/libs/*.jar  
+    - imagedefinitions.json 
