@@ -3,7 +3,7 @@ name: Trigger CodePipeline on Push to Main
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시할 때 트리거
+      - master  # main 브랜치에 푸시할 때 트리거
 
 jobs:
   trigger:
@@ -20,4 +20,4 @@ jobs:
           aws configure set default.region ${{ secrets.AWS_REGION }}
       - name: CodePipeline 실행
         run: |
-          aws codepipeline start-pipeline-execution --name cicid-pipeloine
+          aws codepipeline start-pipeline-execution --name sesac-app-pipeline-cicd
