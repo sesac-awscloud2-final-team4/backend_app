@@ -34,3 +34,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+cloud:
+  aws:
+    kinesis:
+      stream-name: ${KINESIS_STREAM_NAME}
+      partition-key: ${KINESIS_PARTITION_KEY}
