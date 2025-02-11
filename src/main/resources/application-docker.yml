@@ -1,16 +1,16 @@
 spring:
   datasource:
-    url: ${SPRING_MYSQL_HOST}
+    url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_MYSQL_USERNAME}
     password: ${SPRING_MYSQL_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
   session:
     redis:
       repository-type: indexed
       flush-mode: on_save
+
   data:
-    redis:
+    redis:  
       host: ${SPRING_REDIS_HOST}
       password: ${SPRING_REDIS_PASSWORD}
       port: ${SPRING_REDIS_PORT}
@@ -22,8 +22,15 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
-cloud:
-  aws:
-    kinesis:
-      stream-name: project_stream
-      partition-key: key1
+  server:
+    address: 0.0.0.0
+    port: 80
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
