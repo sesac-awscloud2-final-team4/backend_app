@@ -16,10 +16,11 @@ public class ProductService {
      */
     public Long saveItem(ItemDto itemDto) {
         return itemRepository.save(Item.builder()
-                        .itemName(itemDto.getItemName())
+                        .productName(itemDto.getItemName())
                         .price(itemDto.getPrice())
                         .stockNumber(itemDto.getStockNumber())
-                        .itemDetail(itemDto.getItemDetail())
+                        .productDetail(itemDto.getItemDetail())
+                        .productImage(itemDto.getProductImage())
                 .build()).getId();
     }
 

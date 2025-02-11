@@ -27,7 +27,7 @@ public class ProductController {
 	public String showProductDetail(@PathVariable(name = "id") Long productId, @RequestParam(value = "rec", required = false) String recommended, Model model) {
 		ItemDto item = productService.findItemById(productId);
 		model.addAttribute("item", item);
-		model.addAttribute("items", productService.findAllItem());
+		model.addAttribute("items", productService.findAllItem().stream().limit(6));
 		producer.productEvent(productId, "main", recommended);
 		return "item/product-detail";
 	}

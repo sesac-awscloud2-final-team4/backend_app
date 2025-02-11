@@ -14,8 +14,8 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "itemName", nullable = false)
-	private String itemName;
+	@Column(name = "productName", nullable = false)
+	private String productName;
 
 	@Column(name = "price", nullable = false)
 	private Integer price;
@@ -23,6 +23,9 @@ public class Item {
 	@Column(name = "stockNumber")
 	private Integer stockNumber;
 
-	@Column(name = "itemDetail")
-	private String itemDetail;
+	@Column(name = "productDetail")
+	private String productDetail;
+
+	@Column(name = "productImage")
+	private String productImage;
 }

@@ -28,7 +28,7 @@
 
     <springProfile name="docker">
         <root level="INFO">
-            <appender-ref ref="FILE_APPENDER"/>
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 </configuration>
