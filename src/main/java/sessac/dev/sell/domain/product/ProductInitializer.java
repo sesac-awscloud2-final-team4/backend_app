@@ -2,11 +2,9 @@ package sessac.dev.sell.domain.product;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile(value = "local")
 @RequiredArgsConstructor
 public class ProductInitializer {
 	private final ProductService productService;
