@@ -8,6 +8,7 @@ spring:
     redis:
       repository-type: indexed
       flush-mode: on_save
+      configure-action: none
 
   data:
     redis:  
