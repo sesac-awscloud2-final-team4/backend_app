@@ -12,15 +12,15 @@ public class ProductService {
 
     /**
      * 물건 저장
-     * @param itemDto - 저장할 물건 정보
+     * @param shortItemDto - 저장할 물건 정보
      */
-    public Long saveItem(ItemDto itemDto) {
+    public Long saveItem(FullItemDto shortItemDto) {
         return itemRepository.save(Item.builder()
-                        .productName(itemDto.getItemName())
-                        .price(itemDto.getPrice())
-                        .stockNumber(itemDto.getStockNumber())
-                        .productDetail(itemDto.getItemDetail())
-                        .productImage(itemDto.getProductImage())
+                        .productName(shortItemDto.getItemName())
+                        .price(shortItemDto.getPrice())
+                        .stockNumber(shortItemDto.getStockNumber())
+                        .productDetail(shortItemDto.getItemDetail())
+                        .productImage(shortItemDto.getProductImage())
                 .build()).getId();
     }
 
@@ -29,8 +29,8 @@ public class ProductService {
      * @param id - 물건 ID
      * @return 물건 상세정보
      */
-    public ItemDto findItemById(Long id) {
-        return ItemDto.from(itemRepository.findById(id).orElseThrow());
+    public FullItemDto findItemById(Long id) {
+        return FullItemDto.from(itemRepository.findById(id).orElseThrow());
     }
 
     /**
@@ -38,9 +38,9 @@ public class ProductService {
      *
      * @return 물건 리스트
      */
-    public List<ItemDto> findAllItem(){
+    public List<ShortItemDto> findAllItem(){
         return itemRepository.findAll().stream()
-                .map(ItemDto::from)
+                .map(ShortItemDto::from)
                 .toList();
     }
 
@@ -49,9 +49,9 @@ public class ProductService {
      *
      * @return 물건 리스트
      */
-    public List<ItemDto> findAllById(List<Long> itemIds){
+    public List<ShortItemDto> findAllById(List<Long> itemIds){
         return itemRepository.findAllById(itemIds).stream()
-                .map(ItemDto::from)
+                .map(ShortItemDto::from)
                 .toList();
     }
 
