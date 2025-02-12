@@ -25,15 +25,14 @@ public class ProductController {
 
 	@GetMapping("/product/{id}")
 	public String showProductDetail(@PathVariable(name = "id") Long productId, @RequestParam(value = "rec", required = false) String recommended, Model model) {
-		ItemDto item = productService.findItemById(productId);
-		model.addAttribute("item", item);
+		model.addAttribute("item", productService.findItemById(productId));
 		model.addAttribute("items", productService.findAllItem().stream().limit(6));
 		producer.productEvent(productId, "main", recommended);
 		return "item/product-detail";
 	}
 
 	@PostMapping("/product/add")
-	public String addProduct(final ItemDto params, Model model) {
+	public String addProduct(final FullItemDto params, Model model) {
 		productService.saveItem(params);
 		MessageDto message = new MessageDto("상품 업로드 완료되었습니다. ", "/product",
 				RequestMethod.GET, null);

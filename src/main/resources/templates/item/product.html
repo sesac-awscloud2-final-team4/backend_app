@@ -12,14 +12,14 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">상품 리스트</h1>
     <div class="row">
-        <div class="col-md-4" th:each="item : ${items}">
+        <div class="col-md-3" th:each="item : ${items}">
             <div class="card mb-4">
-                <img th:src="|/img/product-img/${item.productImage}|" class="card-img-top" alt="상품 이미지"> <!-- 상품 이미지 URL -->
+                <img th:src="|https://cdn.rosmontis.shop/${item.productImage}|" class="card-img-top" alt="상품 이미지"> <!-- 상품 이미지 URL -->
 
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h6 class="card-title">
                         <a th:href="@{/product/{id}(id=${item.id})}" th:text="${item.itemName}"></a>
-                    </h5>
+                    </h6>
                     <p class="card-text" th:text="${item.itemDetail}">상품 설명이 들어갑니다.</p>
                     <p class="card-text"><strong th:text="'가격: ' + ${item.price} + '원'"></strong></p>
 

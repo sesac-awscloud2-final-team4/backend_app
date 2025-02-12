@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-6">
             <!-- 왼쪽: 상품 이미지 -->
-            <img th:src="|/img/product-img/${item.productImage}|" class="img-fluid" alt="상품 이미지">
+            <img th:src="|https://cdn.rosmontis.shop/${item.productImage}|" class="img-fluid" alt="상품 이미지">
         </div>
         <div class="col-md-6">
             <!-- 오른쪽: 상품 설명 및 정보 -->
@@ -31,7 +31,7 @@
         <div class="row mt-2">
             <div class="col-2 d-flex" th:each="item : ${items}">
                 <div class="card mb-4" th:id="${item.id}">
-                    <img th:src="|/img/product-img/${item.productImage}|" class="card-img-top" alt="상품 이미지">
+                    <img th:src="|https://cdn.rosmontis.shop/${item.productImage}|" class="card-img-top" alt="상품 이미지">
 
                     <div class="card-body">
                         <h5 class="card-title">
