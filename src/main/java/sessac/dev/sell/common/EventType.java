@@ -9,7 +9,8 @@ public enum EventType {
 	TO_CART("to_cart"),
 	RECOMMEND_CLICK("rec_click"),
 	PURCHASE("purchase"),
-	REVIEW_RATING("review_rating");
+	REVIEW_RATING("review_rating"),
+	LOGIN("login");
 
 	private final String name;
 

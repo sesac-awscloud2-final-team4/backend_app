@@ -89,8 +89,7 @@ public class MemberService {
 		String encodedPassword = (member == null) ? "" : member.getPassword();
 
 		// 2. 회원 정보 및 비밀번호 체크
-		if (member == null || passwordEncoder.matches(password,
-				encodedPassword) == false) {
+		if (member == null || !passwordEncoder.matches(password, encodedPassword)) {
 			return null;
 		}
 
