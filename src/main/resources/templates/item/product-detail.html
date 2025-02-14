@@ -12,16 +12,16 @@
     <div class="row">
         <div class="col-md-6">
             <!-- 왼쪽: 상품 이미지 -->
-            <img th:src="|https://cdn.rosmontis.shop/${item.productImage}|" class="img-fluid" alt="상품 이미지">
+            <img th:src="|https://cdn.rosmontis.shop/${product.productImage}|" class="img-fluid" alt="상품 이미지">
         </div>
         <div class="col-md-6">
             <!-- 오른쪽: 상품 설명 및 정보 -->
-            <h1 th:text="${item.itemName}">상품 이름</h1>
-            <p th:text="'가격: ' + ${item.price} + '원'"></p>
-            <p th:text="${item.itemDetail}"></p>
-            <p th:text="'재고: ' + ${item.stockNumber}"></p>
+            <h1 th:text="${product.itemName}">상품 이름</h1>
+            <p th:text="'가격: ' + ${product.price} + '원'"></p>
+            <p th:text="${product.itemDetail}"></p>
+            <p th:text="'재고: ' + ${product.stockNumber}"></p>
             <a href="/product" class="btn btn-secondary mb-3">목록으로 돌아가기</a>
-            <form th:action="|@{/cart/add/{itemId}(itemId=${item.id})}?page=prod_detail|" method="post">
+            <form th:action="|@{/cart/add/{itemId}(itemId=${product.id})}?page=prod_detail|" method="post">
                 <button type="submit" class="btn btn-secondary">장바구니에 담기</button>
             </form>
         </div>
@@ -29,16 +29,16 @@
         <h4 class="mt-4">추천 상품</h4>
 
         <div class="row mt-2">
-            <div class="col-2 d-flex" th:each="item : ${items}">
-                <div class="card mb-4" th:id="${item.id}">
-                    <img th:src="|https://cdn.rosmontis.shop/${item.productImage}|" class="card-img-top" alt="상품 이미지">
+            <div class="col-2 d-flex" th:each="product : ${items}">
+                <div class="card mb-4" th:id="${product.id}">
+                    <img th:src="|https://cdn.rosmontis.shop/${product.productImage}|" class="card-img-top" alt="상품 이미지">
 
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a href="#" th:onclick="|showProduct(${item.id})|" th:text="${item.itemName}"></a>
+                            <a href="#" th:onclick="|showProduct(${product.id})|" th:text="${product.itemName}"></a>
                         </h5>
-                        <p class="card-text" th:text="${item.itemDetail}">상품 설명이 들어갑니다.</p>
-                        <p class="card-text"><strong th:text="'가격: ' + ${item.price} + '원'"></strong></p>
+                        <p class="card-text" th:text="${product.itemDetail}">상품 설명이 들어갑니다.</p>
+                        <p class="card-text"><strong th:text="'가격: ' + ${product.price} + '원'"></strong></p>
                     </div>
                 </div>
             </div>

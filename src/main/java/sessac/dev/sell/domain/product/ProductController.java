@@ -25,7 +25,7 @@ public class ProductController {
 
 	@GetMapping("/product/{id}")
 	public String showProductDetail(@PathVariable(name = "id") Long productId, @RequestParam(value = "rec", required = false) String recommended, Model model) {
-		model.addAttribute("item", productService.findItemById(productId));
+		model.addAttribute("product", productService.findItemById(productId));
 		model.addAttribute("items", productService.findAllItem().stream().limit(6));
 		producer.productEvent(productId, "main", recommended);
 		return "item/product-detail";

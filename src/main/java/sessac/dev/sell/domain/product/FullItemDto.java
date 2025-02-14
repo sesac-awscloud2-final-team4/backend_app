@@ -13,14 +13,14 @@ public class FullItemDto {
 	private String itemDetail;      // 상품 상세 설명
 	private String productImage;    // 상품 이미지
 
-	public static FullItemDto from(Item item) {
+	public static FullItemDto from(Product product) {
 		FullItemDto fullItemDto = new FullItemDto();
-		fullItemDto.id = item.getId();
-		fullItemDto.itemName = item.getProductName();
-		fullItemDto.price = item.getPrice();
-		fullItemDto.stockNumber = item.getStockNumber();
-		fullItemDto.itemDetail = item.getProductDetail();
-		fullItemDto.productImage = item.getProductImage();
+		fullItemDto.id = product.getId();
+		fullItemDto.itemName = product.getProductName();
+		fullItemDto.price = product.getPrice();
+		fullItemDto.stockNumber = product.getStockNumber();
+		fullItemDto.itemDetail = product.getProductDetail();
+		fullItemDto.productImage = product.getProductImage();
 		return fullItemDto;
 	}
 }

@@ -17,29 +17,29 @@
 
     <div class="row">
         <div class="col-9">
-            <div class="cart-item card mb-4" th:each="item : ${cartItems}" th:id="|cart-item-${item.itemId}|" th:data-price="${item.price}">
+            <div class="cart-product card mb-4" th:each="product : ${cartItems}" th:id="|cart-product-${product.itemId}|" th:data-price="${product.price}">
                 <div class="row card-body">
                     <div class="col-3">
-                        <img th:src="|https://cdn.rosmontis.shop/${item.productImage}|" class="card-img" alt="상품 이미지"> <!-- 상품 이미지 URL -->
+                        <img th:src="|https://cdn.rosmontis.shop/${product.productImage}|" class="card-img" alt="상품 이미지"> <!-- 상품 이미지 URL -->
                     </div>
 
                     <div class="col">
                         <div class="row">
                             <h5 class="col card-title">
-                                <a class="item-name" th:href="@{/product/{id}(id=${item.itemId})}" th:text="${item.itemName}">상품이름</a>
+                                <a class="product-name" th:href="@{/product/{id}(id=${product.itemId})}" th:text="${product.itemName}">상품이름</a>
                             </h5>
                             <div class="col text-right">
-                                <button th:onclick="|deleteCartItem(${item.itemId})|" class="btn btn-danger" type="submit">삭제</button>
+                                <button th:onclick="|deleteCartItem(${product.itemId})|" class="btn btn-danger" type="submit">삭제</button>
                             </div>
                         </div>
 
-                        <p class="card-text"><strong th:text="'가격: ' + ${item.price} + '원'">1000원</strong></p>
+                        <p class="card-text"><strong th:text="'가격: ' + ${product.price} + '원'">1000원</strong></p>
                         <div class="row">
                             <div class="col col-lg-4 card">
                                 <div class="row card-body">
-                                    <button class="col btn btn-primary" type="button" th:onclick="|updateCartItem(${item.itemId}, 1)|">+</button>
-                                    <p class="col text-center item-quantity" th:text="${item.quantity}">1</p>
-                                    <button class="col btn btn-primary" type="button" th:onclick="|updateCartItem(${item.itemId}, -1)|">-</button>
+                                    <button class="col btn btn-primary" type="button" th:onclick="|updateCartItem(${product.itemId}, 1)|">+</button>
+                                    <p class="col text-center product-quantity" th:text="${product.quantity}">1</p>
+                                    <button class="col btn btn-primary" type="button" th:onclick="|updateCartItem(${product.itemId}, -1)|">-</button>
                                 </div>
                             </div>
                         </div>
