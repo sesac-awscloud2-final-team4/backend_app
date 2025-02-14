@@ -36,6 +36,13 @@ phases:
       - echo "Building the Docker image..."
       - docker build -t ${ECR_REPOSITORY_NAME}:latest .
 
+  test: #ㅅㄷ
+      commands:
+        - echo "Starting tests..."
+        - ./gradlew test # JUnit 단위 테스트 실행
+        - echo "Running integration tests..." # 통합 테스트 실행 (선택 사항)
+        - ./gradlew integrationTest # 통합 테스트 실행 (선택 사항)
+
   post_build:
     commands:
       - echo "Pushing the Docker image to ECR..."
