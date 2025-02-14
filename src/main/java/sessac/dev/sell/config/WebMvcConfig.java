@@ -16,7 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		registry.addInterceptor(new LoginCheckInterceptor())
 				.addPathPatterns("/**")
-				.excludePathPatterns("/login", "/member")
+				.excludePathPatterns("/login", "/member", "/member-count")
 				.excludePathPatterns("/**/*.js", "/**/*.css", "/**/*.jpg", "/**/*.png", "/**/*.gif", "/**/*.ico");  // 정적 리소스 제외
 	}
 }
