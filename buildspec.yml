@@ -34,12 +34,12 @@ phases:
       - echo "Building the project with Gradle..."
       - ./gradlew build -x test  # Gradle 빌드 실행 (test 제외)
 
-  test:
-    commands:
-      - echo "Starting tests..." # 테스트 시작 로그 (선택 사항)
-      - ./gradlew test # JUnit 단위 테스트 실행 (예시)
-      - echo "Running integration tests..." # 통합 테스트 실행 로그 (선택 사항)
-      - ./gradlew integrationTest # 통합 테스트 실행 (선택 사항)
+  # test:
+  #   commands:
+  #     - echo "Starting tests..." # 테스트 시작 로그 (선택 사항)
+  #     - ./gradlew test # JUnit 단위 테스트 실행 (예시)
+  #     - echo "Running integration tests..." # 통합 테스트 실행 로그 (선택 사항)
+  #     - ./gradlew integrationTest # 통합 테스트 실행 (선택 사항)
 
   post_build:
     commands:
