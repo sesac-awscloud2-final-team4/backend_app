@@ -7,7 +7,7 @@ phases:
       - export AWS_ACCOUNT_ID=$(aws secretsmanager get-secret-value --secret-id sesac_secrets --query SecretString --output text | jq -r .AWS_ACCOUNT_ID)
       - export AWS_REGION=$(aws secretsmanager get-secret-value --secret-id sesac_secrets --query SecretString --output text | jq -r .AWS_REGION)
       - export ECR_REPOSITORY_NAME=$(aws secretsmanager get-secret-value --secret-id sesac_secrets --query SecretString --output text | jq -r .ECR_REPOSITORY_NAME)
-      - export TASK_FAMILY="sesac-cicid-2nd-taskfamily"
+      - export TASK_FAMILY="sesac-ecs-app-taskfamily"
       - export SECRET_ARN="arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:sesac_secrets-njeoX6"
       
       # SPRING_ 환경 변수들을 모두 AWS Secrets Manager에서 가져와 설정

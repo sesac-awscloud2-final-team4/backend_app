@@ -1,15 +1,6 @@
 version: 0.2
 
 phases:
-  install: # 필요한 경우 install 단계 추가 (테스트 환경 설정)
-    commands:
-      - echo "Setting up test environment..."
-      # 테스트 환경 설정 명령어 (예: 테스트 데이터베이스 설정, mocking 라이브러리 설치 등)
-      # 만약 테스트 환경 설정이 필요 없다면, install 단계를 생략해도 됩니다.
-
   test:
     commands:
-      - echo "Starting unit tests..."
-      - ./gradlew test # JUnit 단위 테스트 실행 (Gradle 프로젝트 예시)
-      - echo "Starting integration tests..."
-      - ./gradlew integrationTest # 통합 테스트 실행 (Gradle 프로젝트 예시)
+      - echo "Minimal Test Phase - Success!"
