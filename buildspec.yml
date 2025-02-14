@@ -9,7 +9,7 @@ phases:
       - export ECR_REPOSITORY_NAME=$(aws secretsmanager get-secret-value --secret-id sesac_secrets --query SecretString --output text | jq -r .ECR_REPOSITORY_NAME)
       - export TASK_FAMILY="sesac-cicid-2nd-taskfamily"
       - export SECRET_ARN="arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:sesac_secrets-njeoX6"
-      
+
       # SPRING_ 환경 변수들을 모두 AWS Secrets Manager에서 가져와 설정
       - export SPRING_MYSQL_HOST=$(aws secretsmanager get-secret-value --secret-id sesac_secrets --query SecretString --output text | jq -r .SPRING_MYSQL_HOST)
       - export SPRING_MYSQL_USERNAME=$(aws secretsmanager get-secret-value --secret-id sesac_secrets --query SecretString --output text | jq -r .SPRING_MYSQL_USERNAME)
@@ -32,16 +32,14 @@ phases:
   build:
     commands:
       - echo "Building the project with Gradle..."
-      - ./gradlew build -x test  # Gradle 빌드 실행
-      - echo "Building the Docker image..."
-      - docker build -t ${ECR_REPOSITORY_NAME}:latest .
+      - ./gradlew build -x test  # Gradle 빌드 실행 (test 제외)
 
-  test: #ㅅㄷ
-      commands:
-        - echo "Starting tests..."
-        - ./gradlew test # JUnit 단위 테스트 실행
-        - echo "Running integration tests..." # 통합 테스트 실행 (선택 사항)
-        - ./gradlew integrationTest # 통합 테스트 실행 (선택 사항)
+  test:
+    commands:
+      - echo "Starting tests..." # 테스트 시작 로그 (선택 사항)
+      - ./gradlew test # JUnit 단위 테스트 실행 (예시)
+      - echo "Running integration tests..." # 통합 테스트 실행 로그 (선택 사항)
+      - ./gradlew integrationTest # 통합 테스트 실행 (선택 사항)
 
   post_build:
     commands:
@@ -49,9 +47,9 @@ phases:
       - docker tag ${ECR_REPOSITORY_NAME}:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest
       - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest
       - echo "Build complete."
-      - printf '[{"name":"backend_container","imageUri":"%s"}]' ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest > imagedefinitions.json 
+      - printf '[{"name":"backend_container","imageUri":"%s"}]' ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest > imagedefinitions.json
 
 artifacts:
   files:
-    - build/libs/*.jar  
-    - imagedefinitions.json 
+    - build/libs/*.jar
+    - imagedefinitions.json
