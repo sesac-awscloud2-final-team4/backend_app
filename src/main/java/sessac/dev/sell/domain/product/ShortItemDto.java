@@ -13,14 +13,14 @@ public class ShortItemDto {
     private String itemDetail;      // 상품 상세 설명
     private String productImage;    // 상품 이미지
 
-    public static ShortItemDto from(Item item) {
+    public static ShortItemDto from(Product product) {
         ShortItemDto shortItemDto = new ShortItemDto();
-        shortItemDto.id = item.getId();
-        shortItemDto.itemName = item.getProductName();
-        shortItemDto.price = item.getPrice();
-        shortItemDto.stockNumber = item.getStockNumber();
-        shortItemDto.itemDetail = item.getProductDetail();
-        shortItemDto.productImage = item.getProductImage();
+        shortItemDto.id = product.getId();
+        shortItemDto.itemName = product.getProductName();
+        shortItemDto.price = product.getPrice();
+        shortItemDto.stockNumber = product.getStockNumber();
+        shortItemDto.itemDetail = product.getProductDetail();
+        shortItemDto.productImage = product.getProductImage();
         return shortItemDto;
     }
 
