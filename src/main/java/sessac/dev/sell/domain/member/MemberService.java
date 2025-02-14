@@ -71,9 +71,7 @@ public class MemberService {
 	 * @return 회원 수
 	 */
 	public int countMemberByLoginId(final String loginId) {
-//		return memberMapper.countByLoginId(loginId);
-		// TODO
-		return 0;
+		return memberRepository.countMemberByLoginId(loginId);
 	}
 
 	/**
