@@ -1,6 +1,12 @@
 version: 0.2
-
 phases:
-  test:
+  install:
     commands:
-      - echo "Minimal Test Phase - Success!"
+      - echo "Install 단계..." # 필요하다면 install 명령어 추가
+  pre_build:
+    commands:
+      - echo "Pre-build 단계..." # 필요하다면 pre_build 명령어 추가
+  build:  # <-- 유효한 빌드 단계 이름 "build"
+    commands:
+      - echo "Gradle 테스트 실행..."
+      - ./gradlew test  # 테스트 실행 명령어 (build 단계에 포함)
