@@ -32,7 +32,7 @@ phases:
   build:
     commands:
       - echo "Building the project with Gradle..."
-      - ./gradlew build -x test  # Gradle 빌드 실행
+      - ./gradlew build # Gradle 빌드 실행
       - echo "Building the Docker image..."
       - docker build -t ${ECR_REPOSITORY_NAME}:latest .
 
