@@ -9,4 +9,5 @@ phases:
   build:  # <-- 유효한 빌드 단계 이름 "build"
     commands:
       - echo "Gradle 테스트 실행..."
+      - chmod +x ./gradlew 
       - ./gradlew test  # 테스트 실행 명령어 (build 단계에 포함)
