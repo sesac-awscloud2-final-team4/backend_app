@@ -71,9 +71,7 @@ public class MemberService {
 	 * @return 회원 수
 	 */
 	public int countMemberByLoginId(final String loginId) {
-//		return memberMapper.countByLoginId(loginId);
-		// TODO
-		return 0;
+		return memberRepository.countMemberByLoginId(loginId);
 	}
 
 	/**
@@ -89,8 +87,7 @@ public class MemberService {
 		String encodedPassword = (member == null) ? "" : member.getPassword();
 
 		// 2. 회원 정보 및 비밀번호 체크
-		if (member == null || passwordEncoder.matches(password,
-				encodedPassword) == false) {
+		if (member == null || !passwordEncoder.matches(password, encodedPassword)) {
 			return null;
 		}
 

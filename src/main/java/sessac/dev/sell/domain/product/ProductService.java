@@ -8,18 +8,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    private final ItemRepository itemRepository;
+    private final ProductRepository productRepository;
 
     /**
      * 물건 저장
-     * @param itemDto - 저장할 물건 정보
+     * @param shortItemDto - 저장할 물건 정보
      */
-    public Long saveItem(ItemDto itemDto) {
-        return itemRepository.save(Item.builder()
-                        .itemName(itemDto.getItemName())
-                        .price(itemDto.getPrice())
-                        .stockNumber(itemDto.getStockNumber())
-                        .itemDetail(itemDto.getItemDetail())
+    public Long saveItem(FullItemDto shortItemDto) {
+        return productRepository.save(Product.builder()
+                        .productName(shortItemDto.getItemName())
+                        .price(shortItemDto.getPrice())
+                        .stockNumber(shortItemDto.getStockNumber())
+                        .productDetail(shortItemDto.getItemDetail())
+                        .productImage(shortItemDto.getProductImage())
                 .build()).getId();
     }
 
@@ -28,8 +29,8 @@ public class ProductService {
      * @param id - 물건 ID
      * @return 물건 상세정보
      */
-    public ItemDto findItemById(Long id) {
-        return ItemDto.from(itemRepository.findById(id).orElseThrow());
+    public FullItemDto findItemById(Long id) {
+        return FullItemDto.from(productRepository.findById(id).orElseThrow());
     }
 
     /**
@@ -37,9 +38,9 @@ public class ProductService {
      *
      * @return 물건 리스트
      */
-    public List<ItemDto> findAllItem(){
-        return itemRepository.findAll().stream()
-                .map(ItemDto::from)
+    public List<ShortItemDto> findAllItem(){
+        return productRepository.findAll().stream()
+                .map(ShortItemDto::from)
                 .toList();
     }
 
@@ -48,9 +49,9 @@ public class ProductService {
      *
      * @return 물건 리스트
      */
-    public List<ItemDto> findAllById(List<Long> itemIds){
-        return itemRepository.findAllById(itemIds).stream()
-                .map(ItemDto::from)
+    public List<ShortItemDto> findAllById(List<Long> itemIds){
+        return productRepository.findAllById(itemIds).stream()
+                .map(ShortItemDto::from)
                 .toList();
     }
 
@@ -59,6 +60,6 @@ public class ProductService {
      * @param id - 삭제할 물건 ID
      */
     public void deleteItemById(Long id) {
-        itemRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
 }

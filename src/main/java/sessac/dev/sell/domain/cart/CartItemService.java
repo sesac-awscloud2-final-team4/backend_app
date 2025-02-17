@@ -2,8 +2,8 @@ package sessac.dev.sell.domain.cart;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sessac.dev.sell.domain.product.ItemDto;
 import sessac.dev.sell.domain.product.ProductService;
+import sessac.dev.sell.domain.product.ShortItemDto;
 
 import java.util.List;
 import java.util.Map;
@@ -17,11 +17,11 @@ public class CartItemService {
 
 	public List<CartItemDto> getCartItems(Long memberId) {
 		List<CartDto> cartList = cartService.getCartItems(memberId);
-		List<ItemDto> itemList = productService.findAllById(cartList.stream()
+		List<ShortItemDto> itemList = productService.findAllById(cartList.stream()
 				.map(CartDto::getItemId)
 				.toList());
-		Map<Long, ItemDto> itemMap = itemList.stream()
-				.collect(Collectors.toMap(ItemDto::getId, itemDto -> itemDto));
+		Map<Long, ShortItemDto> itemMap = itemList.stream()
+				.collect(Collectors.toMap(ShortItemDto::getId, itemDto -> itemDto));
 		return cartList.stream()
 				.map(cartDto -> {
 					CartItemDto cartItemDto = new CartItemDto();
@@ -29,6 +29,7 @@ public class CartItemService {
 					cartItemDto.setPrice(itemMap.get(cartDto.getItemId()).getPrice());
 					cartItemDto.setQuantity(cartDto.getQuantity());
 					cartItemDto.setItemName(itemMap.get(cartDto.getItemId()).getItemName());
+					cartItemDto.setProductImage(itemMap.get(cartDto.getItemId()).getProductImage());
 					return cartItemDto;
 				})
 				.toList();

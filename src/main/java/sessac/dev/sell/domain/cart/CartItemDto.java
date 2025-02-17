@@ -10,4 +10,5 @@ public class CartItemDto {
 	private String itemName;
 	private Integer price;
 	private Integer quantity;
+	private String productImage;
 }

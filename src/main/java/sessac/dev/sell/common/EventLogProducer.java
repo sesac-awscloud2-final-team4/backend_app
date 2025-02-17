@@ -51,4 +51,8 @@ public class EventLogProducer {
 	public void cartEvent(Long productId, String page) {
 		kinesisProducerService.sendEventMessage(EventType.TO_CART, productId, page, null);
 	}
+
+	public void loginEvent() {
+		kinesisProducerService.sendEventMessage(EventType.LOGIN, null, null, null);
+	}
 }

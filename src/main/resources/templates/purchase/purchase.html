@@ -16,20 +16,20 @@
         주문 내역이 없습니다.
     </p>
 
-    <div class="row" th:each="item : ${orderItems}">
+    <div class="row" th:each="product : ${orderItems}">
         <div class="col card m-4">
             <div class="row card-body">
                 <div class="col-3">
-                    <img src="/img/product-img/product2.jpg" class="card-img" alt="상품 이미지"> <!-- 상품 이미지 URL -->
+                    <img th:src="|https://cdn.rosmontis.shop/${product.productImage}|" class="card-img" alt="상품 이미지"> <!-- 상품 이미지 URL -->
                 </div>
 
                 <div class="col">
                     <div class="row card-title">
-                        <a class="col card-text" th:href="@{/product/{id}(id=${item.itemId})}" th:text="${item.itemName}">상품이름</a>
+                        <a class="col card-text" th:href="@{/product/{id}(id=${product.itemId})}" th:text="${product.itemName}">상품이름</a>
                     </div>
                     <div class="row">
-                        <p class="col card-text"><strong th:text="'가격: ' + ${item.price} + '원'">1000원</strong></p>
-                        <p class="col card-text"><strong th:text="'개수: ' + ${item.quantity} + '개'">1개</strong></p>
+                        <p class="col card-text"><strong th:text="'가격: ' + ${product.price} + '원'">1000원</strong></p>
+                        <p class="col card-text"><strong th:text="'개수: ' + ${product.quantity} + '개'">1개</strong></p>
                     </div>
                 </div>
             </div>
@@ -39,21 +39,21 @@
                 <h4 class="card-title">평점 입력</h4>
 
                 <!-- 별점 선택 폼 -->
-                <div class="rate" th:id="|${item.orderId}-${item.itemId}-rate|">
-                    <input type="radio" th:id="|${item.orderId}-${item.itemId}-rate-5|" th:name="|${item.orderId}-${item.itemId}-rate|" value="5" />
-                    <label th:for="|${item.orderId}-${item.itemId}-rate-5|" title="text">5 stars</label>
+                <div class="rate" th:id="|${product.orderId}-${product.itemId}-rate|">
+                    <input type="radio" th:id="|${product.orderId}-${product.itemId}-rate-5|" th:name="|${product.orderId}-${product.itemId}-rate|" value="5" />
+                    <label th:for="|${product.orderId}-${product.itemId}-rate-5|" title="text">5 stars</label>
 
-                    <input type="radio" th:id="|${item.orderId}-${item.itemId}-rate-4|" th:name="|${item.orderId}-${item.itemId}-rate|" value="4" />
-                    <label th:for="|${item.orderId}-${item.itemId}-rate-4|" title="text">4 stars</label>
+                    <input type="radio" th:id="|${product.orderId}-${product.itemId}-rate-4|" th:name="|${product.orderId}-${product.itemId}-rate|" value="4" />
+                    <label th:for="|${product.orderId}-${product.itemId}-rate-4|" title="text">4 stars</label>
 
-                    <input type="radio" th:id="|${item.orderId}-${item.itemId}-rate-3|" th:name="|${item.orderId}-${item.itemId}-rate|" value="3" />
-                    <label th:for="|${item.orderId}-${item.itemId}-rate-3|" title="text">3 stars</label>
+                    <input type="radio" th:id="|${product.orderId}-${product.itemId}-rate-3|" th:name="|${product.orderId}-${product.itemId}-rate|" value="3" />
+                    <label th:for="|${product.orderId}-${product.itemId}-rate-3|" title="text">3 stars</label>
 
-                    <input type="radio" th:id="|${item.orderId}-${item.itemId}-rate-2|" th:name="|${item.orderId}-${item.itemId}-rate|" value="2" />
-                    <label th:for="|${item.orderId}-${item.itemId}-rate-2|" title="text">2 stars</label>
+                    <input type="radio" th:id="|${product.orderId}-${product.itemId}-rate-2|" th:name="|${product.orderId}-${product.itemId}-rate|" value="2" />
+                    <label th:for="|${product.orderId}-${product.itemId}-rate-2|" title="text">2 stars</label>
 
-                    <input type="radio" th:id="|${item.orderId}-${item.itemId}-rate-1|" th:name="|${item.orderId}-${item.itemId}-rate|" value="1" />
-                    <label th:for="|${item.orderId}-${item.itemId}-rate-1|" title="text">1 star</label>
+                    <input type="radio" th:id="|${product.orderId}-${product.itemId}-rate-1|" th:name="|${product.orderId}-${product.itemId}-rate|" value="1" />
+                    <label th:for="|${product.orderId}-${product.itemId}-rate-1|" title="text">1 star</label>
                 </div>
             </div>
         </div>

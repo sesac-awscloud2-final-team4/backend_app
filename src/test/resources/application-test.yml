@@ -8,3 +8,9 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+
+cloud:
+  aws:
+    kinesis:
+      stream-name: project_stream
+      partition-key: key1

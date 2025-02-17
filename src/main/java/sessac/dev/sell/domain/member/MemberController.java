@@ -5,13 +5,14 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sessac.dev.sell.common.EventLogProducer;
 
 @Controller
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class MemberController {
-
 	private final MemberService memberService;
+	private final EventLogProducer producer;
 
 	// 로그인 페이지
 	@GetMapping("/login")
@@ -75,11 +76,10 @@ public class MemberController {
 			session.setAttribute("userId", member.getLoginId());
 			session.setAttribute("userName", member.getName());
 			session.setAttribute("userGender", member.getGender());
-//			session.setAttribute("userAge",
-//					Period.between(LocalDate.now(), member.getBirthday()).getYears());
 			session.setMaxInactiveInterval(60 * 30);
 		}
 
+		producer.loginEvent();
 		return member;
 	}
 

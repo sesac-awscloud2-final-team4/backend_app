@@ -3,6 +3,8 @@ package sessac.dev.sell.domain.purchase;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "Purchase")
 @Getter
@@ -20,6 +22,9 @@ public class Purchase {
 	@Column(name = "itemId", nullable = false)
 	private Long itemId;
 
+	@Column(name = "cartId", nullable = false)
+	private String cartId;
+
 	@Column(name = "itemName", nullable = false)
 	private String itemName;
 
@@ -28,4 +33,7 @@ public class Purchase {
 
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
+
+	@Column(name = "buyDate")
+	private Timestamp buyDate;
 }

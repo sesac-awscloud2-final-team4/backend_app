@@ -1,9 +1,9 @@
 // 장바구니 총액 업데이트 함수
 function updateTotalPrice() {
     let totalPrice = 0;
-    document.querySelectorAll(".cart-item").forEach(item => {
+    document.querySelectorAll(".cart-product").forEach(item => {
         const price = parseInt(item.dataset.price, 10);
-        const quantity = parseInt(item.querySelector(".item-quantity").textContent, 10);
+        const quantity = parseInt(item.querySelector(".product-quantity").textContent, 10);
         totalPrice += price * quantity;
     });
 
@@ -15,9 +15,9 @@ function updateTotalPrice() {
 
 // 장바구니 비었는지 확인 후 메시지 표시
 function checkCartEmpty() {
-    const cartItems = document.querySelectorAll(".cart-item");
+    const cartItems = document.querySelectorAll(".cart-product");
     const emptyMessage = document.getElementById("empty-cart-message");
-    const orderSummaryCard = document.getElementById("order-summary");
+    const orderSummaryCard = document.getElementById("purchase-summary");
 
     if (cartItems.length === 0) {
         emptyMessage.style.display = "block";
@@ -30,8 +30,8 @@ function checkCartEmpty() {
 
 // 상품 수량 업데이트 (+, - 버튼)
 function updateCartItem(itemId, change) {
-    const cardElement = document.getElementById(`cart-item-${itemId}`);
-    const quantityElement = cardElement.querySelector(".item-quantity");
+    const cardElement = document.getElementById(`cart-product-${itemId}`);
+    const quantityElement = cardElement.querySelector(".product-quantity");
     let newQuantity = parseInt(quantityElement.textContent, 10) + change;
 
     if (newQuantity < 1) return;
@@ -73,7 +73,7 @@ function deleteCartItem(itemId) {
 // 장바구니 비우기 함수
 function clearCart() {
     // 모든 장바구니 아이템 제거
-    document.querySelectorAll(".cart-item").forEach(item => item.remove());
+    document.querySelectorAll(".cart-product").forEach(item => item.remove());
 
     // 서버에 장바구니 비우기 요청
     fetch("/cart/clear", {
@@ -89,11 +89,11 @@ function clearCart() {
 // 장바구니 구매하기 함수
 function buyCart() {
     const cartItems = [];
-    document.querySelectorAll(".cart-item").forEach(item => {
+    document.querySelectorAll(".cart-product").forEach(item => {
         const itemId = item.id.split('-').at(2);
-        const itemName = item.querySelector(".item-name").innerText;
+        const itemName = item.querySelector(".product-name").innerText;
         const price = item.dataset.price
-        const quantity = item.querySelector(".item-quantity").innerText;
+        const quantity = item.querySelector(".product-quantity").innerText;
 
         cartItems.push({
             itemId: itemId,
