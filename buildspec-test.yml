@@ -2,10 +2,10 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Install 단계..." # 필요하다면 install 명령어 추가
+      - echo "Install 단계..." 
   pre_build:
     commands:
-      - echo "Pre-build 단계..." # 필요하다면 pre_build 명령어 추가
+      - echo "Pre-build 단계..." 
   build:  # <-- 유효한 빌드 단계 이름 "build"
     commands:
       - echo "Gradle 테스트 실행..."
